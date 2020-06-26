@@ -41,6 +41,7 @@ sshcfgbacup
 #main script
 choice=$(echo "start")
 
+#Big While loop to keep user inside the script
 while [[ "$choice" != "q" ]]
 do
 
