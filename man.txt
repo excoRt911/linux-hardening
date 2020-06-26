@@ -1,0 +1,61 @@
+Linux SSH-Hardening manual
+
+date: 26/06/2020
+Version: 1.0
+Author: excoRt
+
+
+Explanation for each SSH-Hardening Options:
+
+(1) Disable Root SSH login
+
+Disables root ssh loging by editing sshd_config file.
+Instead of using root, we should be using connecting as user with sudo permission. Make sure you have sudo setup properly before continuing
+
+(2) Disconnect Idle Session
+
+Idle sessions can be dangerous. It is a good idea to log people out after a set amount of inactivity. 
+The ClientAliveInterval is the amount of time in seconds before the server will send an alive message to the client after no data has been received. 
+ClientAliveCountMax is the number of times it will check before disconnecting. In the example below, the server will check on the client after 5 minutes of inactivity. 
+It will do this twice then disconnect.
+
+(3) - Change SSH default Port
+
+Normally SSH runs on port 22. The idea is that most script kiddies are only going to target that port.
+If you change you default port, maybe your attacks will decrease. 
+
+(4) - Disable X11Forwarding
+
+-- Need to be filled --
+
+(5) - Change Default Ciphers and Algorithms
+
+Elaborate description is in:
+https://stribika.github.io/2015/01/04/secure-secure-shell.html
+https://infosec.mozilla.org/guidelines/openssh
+
+(6) - Enable Scary SSH Banner
+
+Often people will talk about the banner leaking system info. They will leave out the fact that the Banner is disabled by default in Ubuntu 16.04. Let us enable it to see what happens.
+This banner is sent out before authentication.
+Everyone attempting to connect through SSH will see this banner
+
+(7) - Change Hostkey Preference
+
+Same resource as in option (5)
+
+(8) - Check for system open ports
+
+Displays which ports are open on your current system
+
+(9) - SSH Audit
+
+SSH Audit is a Python script that will scan your SSH server for some security issues.
+Credits https://github.com/arthepsy/ssh-audit
+
+
+
+
+Next version:
+
+25 options for IPtables rules
