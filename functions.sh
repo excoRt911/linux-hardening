@@ -37,6 +37,7 @@ sshoptions() {
 
 echo "---------------------------------"
 echo "SSH - Hardening Options:" | pv -qL 20
+echo "-----------------------"
 echo "(1) - Disable Root SSH login"
 echo "(2) - Disconnet Idle Session"
 echo "(3) - Change SSH default Port"
@@ -44,10 +45,15 @@ echo "(4) - Disable X11Forwarding"
 echo "(5) - Change Default Ciphers and Algorithms"
 echo "(6) - Enable Scary SSH Banner"
 echo "(7) - Change Hostkey Preference"
+echo "(777) - All SSH hardening options"
+echo "-----------------------"
+echo "Bonus stuff" | pv -qL 20
+echo "-----------------------"
+echo "(8) - Check for system open ports"
+echo "(9) - SSH Audit"
 echo ""
 echo ""
-echo ""
-echo "(777) - Use all settings together"
+echo "(999) - Read manual"
 
 
 
@@ -56,15 +62,15 @@ echo "(777) - Use all settings together"
 #-----------------------------backing up ssh cfg file---------------------
 sshcfgbacup (){	
 
-
-echo "It is extremly recommended to backup SSH config file"
-echo "whould you like to copy it now? (y/n)"
+echo "-----------------------"
+echo "It is extremly recommended to backup SSH config file" | pv -qL 18 
+echo "whould you like to copy it now? (y/n)" | pv -qL 18 
 read -p 'Choice: ' copy
 
 while [[ "${copy,,}" != 'y' ]] && [[ "${copy,,}" != 'n' ]] 
 do
-	echo "Invalid option, please try again"
-	sleep 2
+	echo "Invalid option, please try again" pv -qL 18 
+	sleep 1
 	read -p 'Choice: ' copy
 done
 
@@ -72,28 +78,29 @@ if [[ "$copy" == 'y' ]]
 then
 	sudo cp /etc/ssh/sshd_config /etc/ssh/backup.sshd_config
 	echo "Backup file created" 
-	sleep -3
+	sleep 1
 fi
 
 }
 #-----------------------------Loading SSH Defaults---------------------
 sshcfgdefaults(){
+echo "-----------------------"	
 echo "This script works best on defaults SSH cfg file"
 read -p "Would you like to load ssh default script? (y/n)" defcfg
 while [[ "${defcfg,,}" != 'y' ]] && [[ "${defcfg,,}" != 'n' ]] 
 do
-	echo "Invalid option, please try again"
-	sleep 2
+	echo "Invalid option, please try again" pv -qL 18 
+	sleep 1
 	read -p 'Choice: ' defcfg
 done
 
 if [[ "$defcfg" == 'y' ]]
 then
 	sudo cp sshd_config /etc/ssh/sshd_config
-	echo "Backup file created" 
+	echo "default SSH Config file loaded" | pv -qL 18 
 	sleep 3
 fi
-
+echo "-----------------------"
 }
 
 
@@ -138,6 +145,7 @@ option1(){
 		sleep 3 
 		echo "Disabled root login option"
 	fi
+	echo "-----------------------"
 }
 
 #-- Option 2--
@@ -152,6 +160,7 @@ option2(){
 	sleep 3 
 	echo "Enabled Disocnnect Idle sessions"
 	fi
+	echo "-----------------------"
 }
 #-- Option 3--
 option3(){
@@ -162,6 +171,7 @@ option3(){
 	sudo sed -i "s/#Port 22/$port/" /etc/ssh/sshd_config
 	sleep 3 
 	echo "Change default SSH: $port"
+	echo "-----------------------"
 }
 #-- Option 4--
 option4(){
@@ -174,6 +184,7 @@ option4(){
 	sleep 3 
 	echo "Disabled X11Forwarding"
 	fi
+	echo "-----------------------"
 }
 
 #-- Option 5--
@@ -201,6 +212,7 @@ option5(){
 		else
 			echo "MACs already applied"
 		fi
+	echo "-----------------------"
 }
 #-- Option 6 --
 option6(){
@@ -215,6 +227,7 @@ option6(){
 	sudo echo "		( *,*) ||" >> /etc/issue.net
 	sudo echo "		( )_( )" >> /etc/issue.net
 	echo "scary Banner is all SET"
+	echo "-----------------------"
 	sleep 2 
 }
 #-- Option 7 --
@@ -231,4 +244,13 @@ option7(){
 	sleep 3 
 	echo "Changed Hoskey Preference"
 	fi
+}
+#-- Option 8 --
+option8(){	
+	sudo lsof -i -P -n | grep LISTEN
+}
+
+#-- Option 9 --
+option9(){	
+	sudo python ssh-audit.py $(sudo ifconfig | grep broadcast | awk '{print $2}')
 }
