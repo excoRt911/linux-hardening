@@ -50,7 +50,18 @@ echo "Please provide a choice number | type 'q' to exit"
 
 read -p 'Choice: ' choice
 
-while [[ "${choice,,}" != '1' ]] && [[ "${choice,,}" != '2' ]] && [[ "${choice,,}" != '3' ]] && [[ "${choice,,}" != '4' ]] && [[ "${choice,,}" != '5' ]] && [[ "${choice,,}" != '6' ]] && [[ "${choice,,}" != 'q' ]] 
+while [[ "${choice,,}" != '1' ]] &&
+		[[ "${choice,,}" != '2' ]] &&
+		 [[ "${choice,,}" != '3' ]] &&
+		  [[ "${choice,,}" != '4' ]] &&
+		  [[ "${choice,,}" != '5' ]] && 
+		  [[ "${choice,,}" != '6' ]] && 
+		  [[ "${choice,,}" != '7' ]] && 
+		  [[ "${choice,,}" != '777' ]] &&
+		  [[ "${choice,,}" != '8' ]] && 
+		  [[ "${choice,,}" != '9' ]] && 
+		  [[ "${choice,,}" != '999' ]] && 
+		   [[ "${choice,,}" != 'q' ]] 
 do
 	echo "Invalid option, please try again"
 	sleep 2
@@ -85,6 +96,40 @@ fi
 if [ "$choice" == "6" ]
 then
 	option6
+
+fi
+
+if [ "$choice" == "7" ]
+then
+	option7
+
+fi
+
+if [ "$choice" == "8" ]
+then
+	option8
+
+fi
+
+if [ "$choice" == "9" ]
+then
+	option9
+fi
+
+if [ "$choice" == "999" ]
+then
+	cat man.txt
+fi
+
+if [ "$choice" == "777" ]
+then
+	option1
+	option2
+	option3
+	option4
+	option5
+	option6
+	option7
 
 fi
 
